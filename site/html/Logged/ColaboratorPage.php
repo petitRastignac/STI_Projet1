@@ -14,15 +14,16 @@
     <body>
         <div id="container">
             <div id="browsing">
-                <input type="button" class="browse" value="Déconnection">
-                <input type="button" class="browse" value="Profile">
-                <input type="button" class="browse" value="Réception">
-                <input type="button" class="browse" value="Ecrire message">
+                <input type="button" class="browse" value="Déconnection" onClick="window.location = '../login.php'">
+                <input type="button" class="browse" value="Profile" >
+                <input type="button" class="browse" value="Réception"onClick="window.location = './ReceptionPage.php'">
+                <input type="button" class="browse" value="Ecrire message"onClick="window.location = './NewMessage.php'">
             </div>
 
             <div id="profile">
                 <div id="profile-informations">
                     <p>Username: </p>
+                    <?php echo $_SESSION["user"]; ?>
                     <p>Validation: </p>
                 </div>
             </div>

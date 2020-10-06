@@ -28,6 +28,15 @@ if (!$resultat){
         $_SESSION["id"] = $resultat["id"];
         $_SESSION["user"] = $resultat["user"];
         echo 'Connection !';
+        echo $_SESSION["role"];
+        if($_SESSION["role"] == "colab"){
+        header("Location: ./Logged/ColaboratorPage.php");
+        die();
+        }
+        if($_SESSION["role"] == "admin"){
+        header("Location: ./Logged/AdministratorPage.php");
+        die();
+        }
         
     } else {
         echo 'Mauvais identifiants ou compte non active';

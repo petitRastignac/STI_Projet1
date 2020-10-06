@@ -16,7 +16,7 @@
             <div id="browsing">
                 <input type="button" class="browse" value="Déconnection">
                 <input type="button" class="browse" value="Profile">
-                <input type="button" class="browse" value="Réception">
+                <input type="button" class="browse" value="Réception" >
                 <input type="button" class="browse" value="Ecrire message">
             </div>
 
