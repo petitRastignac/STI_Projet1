@@ -1,4 +1,5 @@
 <?php
+session_start();
 //	
 //	Project: phpLiteAdmin (https://bitbucket.org/phpliteadmin/public)
 //	Version: 1.9.6

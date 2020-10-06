@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Here we grab the user and his password and we verify
 // if they are the same
 try{
@@ -23,10 +24,9 @@ if (!$resultat){
     echo 'Erreur de connection';
 } else {
     if (md5($_POST['password']) == $resultat['pass_md5'] && $resultat['valid'] == 1){
-        session_start();
-        $_SESSION['role'] = $resultat['role'];
-        $_SESSION['id'] = $resultat['id'];
-        $_SESSION['user'] = $resultat['user'];
+        $_SESSION["role"] = $resultat["role"];
+        $_SESSION["id"] = $resultat["id"];
+        $_SESSION["user"] = $resultat["user"];
         echo 'Connection !';
         
     } else {

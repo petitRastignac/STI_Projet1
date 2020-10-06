@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Here we change the password of an user in the db
 try{
     // Create PDO object

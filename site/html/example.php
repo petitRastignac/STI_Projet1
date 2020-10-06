@@ -3,7 +3,7 @@
 <body>
 
 <?php
- 
+ session_start();
   // Set default timezone
   date_default_timezone_set('UTC');
  

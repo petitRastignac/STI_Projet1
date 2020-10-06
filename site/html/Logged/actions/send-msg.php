@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Send a message
 try{
     // Create PDO object
