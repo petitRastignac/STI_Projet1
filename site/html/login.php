@@ -16,6 +16,7 @@ if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
 		}
 		if($validite === false){ //checking if special characters were found in username
 			$message =  'Erreur de connection - Vérifiez vos informations';
+		header("Location: ./login.php");
 		die();
 		}
 
@@ -38,26 +39,22 @@ if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
 	if (!$resultat){
 		$message =  'Erreur de connection - Vérifiez vos informations';
 	} else {
-		if ($resultat['valid'] == 1){
-			if (md5($_POST['pass']) == $resultat['pass_md5']){
-				$_SESSION["role"] = $resultat["role"];
-				$_SESSION["id"] = $resultat["id"];
-				$_SESSION["user"] = $resultat["user"];
-				echo 'Connection !';
-				if($_SESSION["role"] == "colab"){
-				header("Location: ./Logged/ColaboratorPage.php");
-				die();
-				}
-				if($_SESSION["role"] == "admin"){
-				header("Location: ./Logged/AdministratorPage.php"); //après mise à jour de ColaboratorPage ce bloc est devenu redondant
-				die();
-				}
-				
-			} else {
-				$message =  'Erreur de connection - Vérifiez vos informations';
+		if (md5($_POST['pass']) == $resultat['pass_md5'] && $resultat['valid'] == 1){
+			$_SESSION["role"] = $resultat["role"];
+			$_SESSION["id"] = $resultat["id"];
+			$_SESSION["user"] = $resultat["user"];
+			echo 'Connection !';
+			if($_SESSION["role"] == "colab"){
+			header("Location: ./Logged/ColaboratorPage.php");
+			die();
 			}
+			if($_SESSION["role"] == "admin"){
+			header("Location: ./Logged/AdministratorPage.php"); //après mise à jour de ColaboratorPage ce bloc est devenu redondant
+			die();
+			}
+			
 		} else {
-			$message = "Compte non actif";
+			$message =  'Erreur de connection - Vérifiez vos informations';
 		}
 	}
 }

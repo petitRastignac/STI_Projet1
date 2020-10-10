@@ -1,7 +1,7 @@
 <?php session_start();
-if($_SESSION['role'] == 'admin'){
-	header("Location: ./AdministratorPage.php"); //the administrator page is just a better version of a colaborator page, hence the redirect
-    die();
+if(!(isset($_SESSION['id']))){
+	header("Location: ../login.php"); //a non-admin shouldn't ever reach an admin page
+	die();
 }
 
 $message = "";
@@ -54,7 +54,7 @@ if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
     <body>
         <div id="container">
             <div id="browsing">
-                <input type="button" class="browse" value="Déconnection" onClick="window.location = '../login.php'">
+                <input type="button" class="browse" value="Déconnection" onClick="window.location = '../logout.php'">
                 <input type="button" class="browse" value="Profile" onClick="window.location = './ColaboratorPage.php'">
                 <input type="button" class="browse" value="Réception"onClick="window.location = './ReceptionPage.php'">
                 <input type="button" class="browse" value="Ecrire message"onClick="window.location = './NewMessage.php'">

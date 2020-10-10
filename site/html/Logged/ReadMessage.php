@@ -1,5 +1,9 @@
 <?php session_start();
-
+if(isset($_SESSION['id']) === false){
+echo "not logged in yet";
+header("Location: ../login.php");
+die();
+}
 $db = new PDO('sqlite:/usr/share/nginx/databases/database.sqlite');
 $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
@@ -35,7 +39,7 @@ else{
     <body>
         <div id="container">
             <div id="browsing">
-                <input type="button" class="browse" value="Déconnection" onClick="window.location = '../login.php'">
+                <input type="button" class="browse" value="Déconnection" onClick="window.location = '../logout.php'">
                 <input type="button" class="browse" value="Profile" onClick="window.location = './ColaboratorPage.php'">
                 <input type="button" class="browse" value="Réception"onClick="window.location = './ReceptionPage.php'">
                 <input type="button" class="browse" value="Ecrire message"onClick="window.location = './NewMessage.php'">

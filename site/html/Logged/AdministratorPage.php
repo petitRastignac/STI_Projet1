@@ -1,5 +1,5 @@
 <?php session_start();
-if($_SESSION['role'] != 'admin'){
+if(!(isset($_SESSION['id'])) || $_SESSION['role'] != 'admin'){
 	header("Location: ../login.php"); //a non-admin shouldn't ever reach an admin page
 	die();
 }
@@ -154,7 +154,7 @@ if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
     <body>
         <div id="container">
             <div id="browsing">
-                <input type="button" class="browse" value="Déconnection" onClick="window.location = '../login.php'">
+                <input type="button" class="browse" value="Déconnection" onClick="window.location = '../logout.php'">
                 <input type="button" class="browse" value="Profile" onClick="window.location = './ColaboratorPage.php'">
                 <input type="button" class="browse" value="Réception"onClick="window.location = './ReceptionPage.php'">
                 <input type="button" class="browse" value="Ecrire message"onClick="window.location = './NewMessage.php'">

@@ -1,5 +1,9 @@
 <?php
 session_start();
+if(!(isset($_SESSION['id'])) || $_SESSION['role'] != 'admin'){
+	header("Location: /login.php"); //a non-admin shouldn't ever reach an admin page
+	die();
+}
 // Here we change the password of an user in the db
 try{
     // Create PDO object

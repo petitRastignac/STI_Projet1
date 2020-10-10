@@ -1,5 +1,10 @@
 <?php
 session_start();
+if(isset($_SESSION['id']) === false){
+echo "not logged in yet";
+header("Location: ../login.php");
+die();
+}
 // Send a message
 $message="";
 if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -59,7 +64,7 @@ if ($_GET["dest"]){
     <body>
         <div id="container">
             <div id="browsing">
-                <input type="button" class="browse" value="Déconnection" onClick="window.location = '../login.php'">
+                <input type="button" class="browse" value="Déconnection" onClick="window.location = '../logout.php'">
                 <input type="button" class="browse" value="Profile" onClick="window.location = './ColaboratorPage.php'">
                 <input type="button" class="browse" value="Réception"onClick="window.location = './ReceptionPage.php'">
                 <input type="button" class="browse" value="Ecrire message"onClick="window.location = './NewMessage.php'">
