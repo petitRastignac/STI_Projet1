@@ -6,6 +6,7 @@ $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 $exp="";
 $subject="";
 $content="";
+$id = $_GET['i'];
 
 $statement = $db->query("SELECT exp, subject, content FROM Messages WHERE id = '{$_GET['i']}';");
 $statement->execute();
@@ -47,7 +48,13 @@ else{
                 <input type="text" id="subject-value" name="subject-value" value=<?php echo "{$subject}";?> disabled><br>
                 <label id="msg_value" for="msg-value">Message</label><br>
                 <textarea rows="34" cols="81" name="msg-value" disabled><?php echo "{$content}";?></textarea>
+            
+                <form action='ReceptionPage.php' method='post'> 
+                        <a href=<?php echo "NewMessage.php?dest={$exp}";?>>Repondre </a>
+                        <button type='submit' name='suppr' value=<?php echo "{$id}";?> class='btn-suppr'>Supprimer</button>
+                </form>
             </div>
+
         </div>
     </body>
 </html>;

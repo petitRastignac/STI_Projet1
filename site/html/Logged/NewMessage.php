@@ -14,13 +14,14 @@ if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
 		$statement->execute();
 
 		$resultat = $statement->fetch();
-        
-        $message=$resultat;
 
         if ($resultat != null){
+            date_default_timezone_set("Europe/Paris");
+            $date = date('H:i d/m/Y');
+
             $statementE = $db->query("INSERT INTO
-            Messages(exp, dest, subject, content) 
-            VALUES('{$_SESSION['user']}', '{$_POST['dest']}', '{$_POST['subject']}', '{$_POST['msg']}');");
+            Messages(exp, dest, subject, content, date) 
+            VALUES('{$_SESSION['user']}', '{$_POST['dest']}', '{$_POST['subject']}', '{$_POST['msg']}', '{$date}');");
 
             if (!$statementE){
                 $message = 'Echec de l envoie';
@@ -35,6 +36,13 @@ if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
         echo $e->getMessage();
     }
 }
+
+$dest = "";
+if ($_GET["dest"]){
+    $dest = $_GET["dest"];
+}
+
+
 ?>
 
 <html>
@@ -60,7 +68,7 @@ if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
             <div id="writing">
                 <form method="POST">
                     <label for="dest">Destinataire</label>
-                    <input type="text" id="dest-value" name="dest" placeholder="Saisir le nom d'utilisateur du destinataire"><br>
+                    <input type="text" id="dest-value" name="dest" placeholder="Saisir le nom d'utilisateur du destinataire" value="<?php echo $dest?>"><br>
                     <label for="subject">Sujet</label>
                     <input type="text" id="subject-value" name="subject" placeholder="Saisir le sujet"><br>
                     <label id="msg_value" for="msg">Message</label><br>

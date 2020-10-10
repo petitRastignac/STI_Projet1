@@ -1,4 +1,27 @@
 <?php session_start();
+
+if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
+    try{
+        // Create PDO object
+        $db = new PDO('sqlite:/usr/share/nginx/databases/database.sqlite');
+        // Set errormode to exceptions
+        $db->setAttribute(PDO::ATTR_ERRMODE, 
+                                PDO::ERRMODE_EXCEPTION);
+        
+		$statement = $db->query("SELECT * FROM Messages WHERE dest LIKE '{$_SESSION['user']}' AND id = {$_POST[suppr]};");
+		$statement->execute();
+
+		$resultat = $statement->fetch();
+
+        if ($resultat != null){
+            $statementE = $db->query("DELETE FROM
+            Messages WHERE id = {$_POST[suppr]};");
+        }
+    }catch(PDOException $e){
+        echo $e->getMessage();
+    }
+}
+
 ?>
 
 <html>
@@ -28,12 +51,17 @@
    		$db->setAttribute(PDO::ATTR_ERRMODE, 
                             PDO::ERRMODE_EXCEPTION);
     
-  		$statement = $db->query("SELECT id, exp, subject FROM Messages WHERE dest LIKE '{$_SESSION['user']}';");
+  		$statement = $db->query("SELECT id, exp, subject, date FROM Messages WHERE dest LIKE '{$_SESSION['user']}' ORDER BY id DESC;");
   		$statement->execute();
 		$resultat = $statement->fetchAll();
                 if($resultat){
                     for($i = 0; $i < count($resultat); $i++){
-                        echo "<div class='message'><span class='exp'>{$resultat[$i][1]}</span> <a href='ReadMessage.php?i={$resultat[$i][0]}' class='subject'>{$resultat[$i][2]}</a></div>";
+                        echo "<div class='message'><span>{$resultat[$i][3]}</span> <span class='exp'>{$resultat[$i][1]}</span> <a href='ReadMessage.php?i={$resultat[$i][0]}' class='subject'>{$resultat[$i][2]}</a>
+                        <form method='post'> 
+                        <a href='NewMessage.php?dest={$resultat[$i][1]}'>Repondre </a>
+                        <button type='submit' name='suppr' value='{$resultat[$i][0]}' class='btn-suppr'>Supprimer</button>
+                        </form>
+                    </div>";
                     }
                 }
                 else{
