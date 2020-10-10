@@ -3,6 +3,10 @@ if(!(isset($_SESSION['id']))){
 	header("Location: ../login.php"); //a non-admin shouldn't ever reach an admin page
 	die();
 }
+if($_SESSION['role'] === 'admin'){
+       header("Location: ./AdministratorPage.php"); //a non-admin shouldn't ever reach an admin page
+       die();
+}
 
 $message = "";
 if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
