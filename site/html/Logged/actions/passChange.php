@@ -8,11 +8,15 @@ try{
     $db->setAttribute(PDO::ATTR_ERRMODE, 
                             PDO::ERRMODE_EXCEPTION);
     
-    $pass = md5($_POST['password']);    
-    $statement = $db->query("UPDATE Member SET pass_md5 = '{$pass}' WHERE id = {$_SESSION['id']}");
-    $statement->execute();
+    $statementE = $db->query("INSERT INTO
+            Messages(exp, dest, subject, content) 
+            VALUES('{$_SESSION['user']}', '{$_POST['dest']}', '{$_POST['subject']}', '{$_POST['msg']}');");
 
-    $resultat = $statement->fetch();
+            if (!$statementE){
+                $message = 'Echec de l envoie';
+            } else {
+                $message = 'Reussite de l envoie';
+            }
 
 }catch(PDOException $e){
     echo $e->getMessage();

@@ -1,7 +1,43 @@
 <?php session_start();
 if($_SESSION['role'] == 'admin'){
 	header("Location: ./AdministratorPage.php"); //the administrator page is just a better version of a colaborator page, hence the redirect
-	die();
+    die();
+}
+
+$message = "";
+if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
+    try{
+        // Create PDO object
+        $db = new PDO('sqlite:/usr/share/nginx/databases/database.sqlite');
+        // Set errormode to exceptions
+        $db->setAttribute(PDO::ATTR_ERRMODE, 
+                                PDO::ERRMODE_EXCEPTION);
+        
+        $statement = $db->query("SELECT pass_md5 FROM Member WHERE user LIKE '{$_SESSION['user']}';");
+        $statement->execute();
+
+        $resultat = $statement->fetch();
+
+        if(!$resultat){
+            $message = "Mauvais mot de passe";
+        }else{
+            $mdc = md5($_POST['passChange']);
+            if (md5($_POST['pass']) === $resultat['pass_md5']){
+                $statementE = $db->query("UPDATE Member SET pass_md5='{$mdc}' WHERE user LIKE '{$_SESSION['user']}';");
+    
+                if (!$statementE){
+                    $message = 'Echec';
+                } else {
+                    $message = 'Reussite';
+                }
+            } else {
+                $message = "Mauvais mot de passe";
+            }
+        }
+
+    }catch(PDOException $e){
+        echo $e->getMessage();
+    }
 }
 ?>
 <html>
@@ -26,18 +62,18 @@ if($_SESSION['role'] == 'admin'){
 
             <div id="profile">
                 <div id="profile-informations">
-                    <p>Username: </p>
-                    <?php echo $_SESSION["user"]; ?>
-                    <p>Validation: </p>
+                    <p>Username: <?php echo $_SESSION["user"]; ?></p>
                 </div>
             </div>
 
             <div id="change_pass">
                 <div id="change_pass_info">
-                    <form action="./actions/passChange.php">
-                        <label for='passChange'>Changer de mot de passe :</label>
-                        <input type="password" id="passChange" name="passChange" placeholder="Rentrez votre nouveau mot de passe"><br>
+                    <form method="POST">
+                        <label for='passChange'>Changer de mot de passe:</label></br></br>
+                        <label id="passChangeL">Ancien mot de passe :</label><input type="password" id="passChange" name="pass" placeholder="Rentrez votre ancien mot de passe" required><br>
+                        <label id="passChangeL">Nouveau mot de passe :</label><input type="password" id="passChange" name="passChange" placeholder="Rentrez votre nouveau mot de passe" required><br>
                         <input id="passChange" type="submit" value="Valider">
+                        <p id="passChangeL"> <?php echo $message; ?></p>
                     </form>
                 </div>
             </div>

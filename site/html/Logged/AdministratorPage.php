@@ -26,8 +26,7 @@ if($_SESSION['role'] != 'admin'){
 
             <div id="profile">
                 <div id="profile-informations">
-                    <p>Username: admin</p>
-                    <p>Validation: </p>
+                    <p>Username: <?php echo $_SESSION["user"]; ?></p>
                 </div>
             </div>
 
@@ -70,10 +69,12 @@ if($_SESSION['role'] != 'admin'){
 
             <div id="change_pass">
                 <div id="change_pass_info">
-                    <form action="./actions/passChange.php">
-                        <label for='passChange'>Changer de mot de passe :</label>
-                        <input type="password" id="passChange" name="passChange" placeholder="Rentrez votre nouveau mot de passe"><br>
+                    <form method="POST">
+                        <label for='passChange'>Changer de mot de passe:</label></br></br>
+                        <label id="passChangeL">Ancien mot de passe :</label><input type="password" id="passChange" name="pass" placeholder="Rentrez votre ancien mot de passe" required><br>
+                        <label id="passChangeL">Nouveau mot de passe :</label><input type="password" id="passChange" name="passChange" placeholder="Rentrez votre nouveau mot de passe" required><br>
                         <input id="passChange" type="submit" value="Valider">
+                        <p id="passChangeL"> <?php echo $message; ?></p>
                     </form>
                 </div>
             </div>
