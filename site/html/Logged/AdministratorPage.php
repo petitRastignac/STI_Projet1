@@ -19,7 +19,7 @@ if($_SESSION['role'] != 'admin'){
         <div id="container">
             <div id="browsing">
                 <input type="button" class="browse" value="Déconnection" onClick="window.location = '../login.php'">
-                <input type="button" class="browse" value="Profile" >
+                <input type="button" class="browse" value="Profile" onClick="window.location = './ColaboratorPage.php'">
                 <input type="button" class="browse" value="Réception"onClick="window.location = './ReceptionPage.php'">
                 <input type="button" class="browse" value="Ecrire message"onClick="window.location = './NewMessage.php'">
             </div>

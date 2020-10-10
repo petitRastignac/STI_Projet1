@@ -184,3 +184,17 @@ input[type=submit]#passChange{
     margin-left: 0px;
     width: 90%;
 }
+
+.message{
+    display: inline-block;
+    width: 100%;
+
+    margin-bottom: 5px;
+}
+
+.exp{
+    margin-right:10px;
+}
+.subject{
+    overflow: hidden;
+}

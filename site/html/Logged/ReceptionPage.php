@@ -1,5 +1,6 @@
 <?php session_start();
 ?>
+
 <html>
     <head>
 		<title>Réception des messages</title>
@@ -15,7 +16,7 @@
         <div id="container">
         <div id="browsing">
                 <input type="button" class="browse" value="Déconnection" onClick="window.location = '../login.php'">
-                <input type="button" class="browse" value="Profile" >
+                <input type="button" class="browse" value="Profile" onClick="window.location = './ColaboratorPage.php'">
                 <input type="button" class="browse" value="Réception"onClick="window.location = './ReceptionPage.php'">
                 <input type="button" class="browse" value="Ecrire message"onClick="window.location = './NewMessage.php'">
             </div>
@@ -27,16 +28,16 @@
    		$db->setAttribute(PDO::ATTR_ERRMODE, 
                             PDO::ERRMODE_EXCEPTION);
     
-  		$statement = $db->query("SELECT * FROM Messages WHERE id_dest = {$_SESSION['id']};");
+  		$statement = $db->query("SELECT id, exp, subject FROM Messages WHERE dest LIKE '{$_SESSION['user']}';");
   		$statement->execute();
-		$resultat = $statement->fetch();
+		$resultat = $statement->fetchAll();
                 if($resultat){
-                for($i = 0; $i < count($resultat); $i++){
-                echo $resultat[$i];
-                }
+                    for($i = 0; $i < count($resultat); $i++){
+                        echo "<div class='message'><span class='exp'>{$resultat[$i][1]}</span> <a href='ReadMessage.php?i={$resultat[$i][0]}' class='subject'>{$resultat[$i][2]}</a></div>";
+                    }
                 }
                 else{
-                echo "pas de messages";
+                    echo "<p>pas de messages</p>";
                 }
                 
                 ?>

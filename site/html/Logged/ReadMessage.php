@@ -1,5 +1,25 @@
 <?php session_start();
+
+$db = new PDO('sqlite:/usr/share/nginx/databases/database.sqlite');
+$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+$exp="";
+$subject="";
+$content="";
+
+$statement = $db->query("SELECT exp, subject, content FROM Messages WHERE id = '{$_GET['i']}';");
+$statement->execute();
+$resultat = $statement->fetch();
+if($resultat){
+    $exp = $resultat['exp'];
+    $subject = $resultat['subject'];
+    $content = $resultat['content'];
+}
+else{
+    header("Location: /Logged/ReceptionPage.php");
+}
 ?>
+
 <html>
     <head>
 		<title>Nouveau message</title>
@@ -15,26 +35,19 @@
         <div id="container">
             <div id="browsing">
                 <input type="button" class="browse" value="Déconnection" onClick="window.location = '../login.php'">
-                <input type="button" class="browse" value="Profile" >
+                <input type="button" class="browse" value="Profile" onClick="window.location = './ColaboratorPage.php'">
                 <input type="button" class="browse" value="Réception"onClick="window.location = './ReceptionPage.php'">
                 <input type="button" class="browse" value="Ecrire message"onClick="window.location = './NewMessage.php'">
             </div>
 
             <div id="writing">
                 <label for="dest-value">Destinataire</label>
-                <input type="text" id="dest-value" name="test-value" value="USER NAME" disabled><br>
+                <input type="text" id="dest-value" name="test-value" value=<?php echo "{$exp}";?> disabled><br>
                 <label for="subject-value">Sujet</label>
-                <input type="text" id="subject-value" name="subject-value" value="SUBJECT" disabled><br>
+                <input type="text" id="subject-value" name="subject-value" value=<?php echo "{$subject}";?> disabled><br>
                 <label id="msg_value" for="msg-value">Message</label><br>
-                <textarea rows="34" cols="81" name="msg-value" disabled>
-
-Bonjour,
-
-Je test un message.
-
-Fin du message.
-                </textarea>
+                <textarea rows="34" cols="81" name="msg-value" disabled><?php echo "{$content}";?></textarea>
             </div>
         </div>
     </body>
-</html>
+</html>;
