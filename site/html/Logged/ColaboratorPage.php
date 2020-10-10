@@ -1,4 +1,8 @@
 <?php session_start();
+if($_SESSION['role'] == 'admin'){
+	header("Location: ./AdministratorPage.php"); //the administrator page is just a better version of a colaborator page, hence the redirect
+	die();
+}
 ?>
 <html>
     <head>
@@ -30,7 +34,7 @@
 
             <div id="change_pass">
                 <div id="change_pass_info">
-                    <form action="/actions/changePass.php">
+                    <form action="./actions/passChange.php">
                         <label for='passChange'>Changer de mot de passe :</label>
                         <input type="password" id="passChange" name="passChange" placeholder="Rentrez votre nouveau mot de passe"><br>
                         <input id="passChange" type="submit" value="Valider">

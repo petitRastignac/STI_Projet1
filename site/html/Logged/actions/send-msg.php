@@ -10,7 +10,7 @@ try{
     
     $statement = $db->query("INSERT OR IGNORE INTO
      Messages(id_exp, id_dest, subject, content) 
-     VALUES(1, 2, 'Bienvenue', 'Vous êtes le bien venue dans notre messagerie\nDe la part de l administration !'););
+     VALUES(1, 2, 'Bienvenue', 'Vous êtes le bien venue dans notre messagerie De la part de l administration !');");
     
     $statement->execute();
 
@@ -22,8 +22,8 @@ try{
 
 // Now we check the password
 if (!$resultat){
-    echo 'Erreur de changement de mot de passe';
+    echo 'échec';
 } else {
-    echo 'Changement de mot de passe effectué';
+    echo 'réussite';
 }
 ?>

@@ -14,17 +14,32 @@
     <body>
         <div id="container">
         <div id="browsing">
-                <input type="button" class="browse" value="Déconnection">
-                <input type="button" class="browse" value="Profile">
-                <input type="button" class="browse" value="Réception">
-                <input type="button" class="browse" value="Ecrire message">
+                <input type="button" class="browse" value="Déconnection" onClick="window.location = '../login.php'">
+                <input type="button" class="browse" value="Profile" >
+                <input type="button" class="browse" value="Réception"onClick="window.location = './ReceptionPage.php'">
+                <input type="button" class="browse" value="Ecrire message"onClick="window.location = './NewMessage.php'">
             </div>
 
             <div id="messages">
-                <p>test test test</p>
-                <p>test</p>
-                <p>test</p>
-                <p>test</p>
+                <?php  
+                $db = new PDO('sqlite:/usr/share/nginx/databases/database.sqlite');
+    		// Set errormode to exceptions
+   		$db->setAttribute(PDO::ATTR_ERRMODE, 
+                            PDO::ERRMODE_EXCEPTION);
+    
+  		$statement = $db->query("SELECT * FROM Messages WHERE id_dest = {$_SESSION['id']};");
+  		$statement->execute();
+		$resultat = $statement->fetch();
+                if($resultat){
+                for($i = 0; $i < count($resultat); $i++){
+                echo $resultat[$i];
+                }
+                }
+                else{
+                echo "pas de messages";
+                }
+                
+                ?>
             </div>
         </div>
     </body>

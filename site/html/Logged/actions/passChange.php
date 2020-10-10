@@ -9,8 +9,7 @@ try{
                             PDO::ERRMODE_EXCEPTION);
     
     $pass = md5($_POST['password']);    
-    $statement = $db->query("UPDATE Member SET pass_md5 = {$pass} WHERE id = {$_SESSION['id']}");
-    
+    $statement = $db->query("UPDATE Member SET pass_md5 = '{$pass}' WHERE id = {$_SESSION['id']}");
     $statement->execute();
 
     $resultat = $statement->fetch();
@@ -24,5 +23,7 @@ if (!$resultat){
     echo 'Erreur de changement de mot de passe';
 } else {
     echo 'Changement de mot de passe effectué';
+    header("Location: ../ColaboratorPage.php");
+    die();
 }
 ?>

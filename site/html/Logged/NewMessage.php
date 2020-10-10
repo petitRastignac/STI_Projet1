@@ -14,14 +14,14 @@
     <body>
         <div id="container">
             <div id="browsing">
-                <input type="button" class="browse" value="Déconnection">
-                <input type="button" class="browse" value="Profile">
-                <input type="button" class="browse" value="Réception">
-                <input type="button" class="browse" value="Ecrire message">
+                <input type="button" class="browse" value="Déconnection" onClick="window.location = '../login.php'">
+                <input type="button" class="browse" value="Profile" >
+                <input type="button" class="browse" value="Réception"onClick="window.location = './ReceptionPage.php'">
+                <input type="button" class="browse" value="Ecrire message"onClick="window.location = './NewMessage.php'">
             </div>
 
             <div id="writing">
-                <form action="/actions/send-msg.php">
+                <form action="./actions/send-msg.php">
                     <label for="dest-value">Destinataire</label>
                     <input type="text" id="dest-value" name="test-value" placeholder="Saisir le nom d'utilisateur du destinataire"><br>
                     <label for="subject-value">Sujet</label>

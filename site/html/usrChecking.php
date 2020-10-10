@@ -3,18 +3,30 @@ session_start();
 // Here we grab the user and his password and we verify
 // if they are the same
 try{
+    //checking for special characters in username
+    $validite = true;
+    for($i=0; $i<strlen($_POST['usr']); $i++){
+    if($_POST['usr'][$i] === "'" || $_POST['usr'][$i] === "-" || $_POST['usr'][$i] === '"'){
+    $validite = false;
+    }
+    }
+    if($validite === false){ //checking if special characters were found in username
+    echo "username not valid - contains special characters";
+    header("Location: ./login.php"); //going back if username invalid
+    die();
+    }
+
     // Create PDO object
     $db = new PDO('sqlite:/usr/share/nginx/databases/database.sqlite');
     // Set errormode to exceptions
     $db->setAttribute(PDO::ATTR_ERRMODE, 
                             PDO::ERRMODE_EXCEPTION);
     
-    $statement = $db->query("SELECT * FROM Member WHERE user LIKE 'popole' ;");
-    
+    $statement = $db->query("SELECT * FROM Member WHERE user LIKE '{$_POST['usr']}';");
     $statement->execute();
 
     $resultat = $statement->fetch();
-
+    
 }catch(PDOException $e){
     echo $e->getMessage();
 }
@@ -34,7 +46,7 @@ if (!$resultat){
         die();
         }
         if($_SESSION["role"] == "admin"){
-        header("Location: ./Logged/AdministratorPage.php");
+        header("Location: ./Logged/AdministratorPage.php"); //après mise à jour de ColaboratorPage ce bloc est devenu redondant
         die();
         }
         

@@ -1,4 +1,8 @@
 <?php session_start();
+if($_SESSION['role'] != 'admin'){
+	header("Location: ../login.php"); //a non-admin shouldn't ever reach an admin page
+	die();
+}
 ?>
 <html>
     <head>
@@ -14,10 +18,10 @@
     <body>
         <div id="container">
             <div id="browsing">
-                <input type="button" class="browse" value="Déconnection">
-                <input type="button" class="browse" value="Profile">
-                <input type="button" class="browse" value="Réception">
-                <input type="button" class="browse" value="Ecrire message">
+                <input type="button" class="browse" value="Déconnection" onClick="window.location = '../login.php'">
+                <input type="button" class="browse" value="Profile" >
+                <input type="button" class="browse" value="Réception"onClick="window.location = './ReceptionPage.php'">
+                <input type="button" class="browse" value="Ecrire message"onClick="window.location = './NewMessage.php'">
             </div>
 
             <div id="profile">
@@ -32,7 +36,7 @@
                     <div id="add-user">
                         <h2>Ajout d'un utilisateur :</h2>
                         <div class="add-user">
-                            <form action="/actions/add-user.php">
+                            <form action="./actions/add-user.php">
                                 <label for="usr_name">Nom d'utilisateur:</label><br>
                                 <input type="text" id="usr_name" name="usr_name" placeholder="Rentrez un nom d'utilisateur"></input><br>
                                 <label for="pass_val">Mot de passe:</label><br>
@@ -48,7 +52,7 @@
                     <div id="change-user">
                         <h2>Modification d'un utilisateur :</h2>
                         <div class="change-user">
-                            <form action="/actions/change-user.php">
+                            <form action="./actions/change-user.php">
                                 <label for="usr_name">Nom d'utilisateur:</label><br>
                                 <input type="text" id="usr_name" name="usr_name" placeholder="Rentrez un nom d'utilisateur"></input><br>
                                 <label for="pass_val">Mot de passe:</label><br>
@@ -66,7 +70,7 @@
 
             <div id="change_pass">
                 <div id="change_pass_info">
-                    <form action="/actions/changePass.php">
+                    <form action="./actions/passChange.php">
                         <label for='passChange'>Changer de mot de passe :</label>
                         <input type="password" id="passChange" name="passChange" placeholder="Rentrez votre nouveau mot de passe"><br>
                         <input id="passChange" type="submit" value="Valider">

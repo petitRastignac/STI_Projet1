@@ -9,8 +9,8 @@ try{
                             PDO::ERRMODE_EXCEPTION);
     
     $pass = md5($_POST['pass_val']);    
-    $statement = $db->query("INSERT OR IGNORE INTO Member(user, pass_md5, role, valid) VALUES($_POST[usr_val], {$pass}, {$_POST[role_val]}, {$_POST[validation_val]});");
-    
+    $statement = $db->query("INSERT OR IGNORE INTO Member(user, pass_md5, role, valid) VALUES({$_POST['usr_name']}, {$pass}, {$_POST['role_val']}, {$_POST['validation_val']});");
+    //echo "INSERT OR IGNORE INTO Member(user, pass_md5, role, valid) VALUES({$_POST['usr_name']}, {$pass}, {$_POST['role_val']}, {$_POST['validation_val']});";
     $statement->execute();
 
     $resultat = $statement->fetch();
