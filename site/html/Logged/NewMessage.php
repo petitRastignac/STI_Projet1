@@ -5,6 +5,12 @@ echo "not logged in yet";
 header("Location: ../login.php");
 die();
 }
+
+function cleaner($string){
+    $ennemis = array("'",'"');
+    return str_replace($ennemis, "", $string);
+}
+
 // Send a message
 $message="";
 if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -23,10 +29,14 @@ if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
         if ($resultat != null){
             date_default_timezone_set("Europe/Paris");
             $date = date('H:i d/m/Y');
+            $Ssubject = cleaner($_POST['subject']);
+            $Scontent = cleaner($_POST['msg']);
+
+            $message = $Scontent;
 
             $statementE = $db->query("INSERT INTO
             Messages(exp, dest, subject, content, date) 
-            VALUES('{$_SESSION['user']}', '{$_POST['dest']}', '{$_POST['subject']}', '{$_POST['msg']}', '{$date}');");
+            VALUES('{$_SESSION['user']}', '{$_POST['dest']}', '{$Ssubject}', '{$Scontent}', '{$date}');");
 
             if (!$statementE){
                 $message = 'Echec de l envoie';
@@ -73,9 +83,9 @@ if ($_GET["dest"]){
             <div id="writing">
                 <form method="POST">
                     <label for="dest">Destinataire</label>
-                    <input type="text" id="dest-value" name="dest" placeholder="Saisir le nom d'utilisateur du destinataire" value="<?php echo $dest?>"><br>
+                    <input type="text" id="dest-value" name="dest" required placeholder="Saisir le nom d'utilisateur du destinataire" value="<?php echo $dest?>"><br>
                     <label for="subject">Sujet</label>
-                    <input type="text" id="subject-value" name="subject" placeholder="Saisir le sujet"><br>
+                    <input type="text" id="subject-value" name="subject" required placeholder="Saisir le sujet" ><br>
                     <label id="msg_value" for="msg">Message</label><br>
                     <textarea rows="34" cols="81" name="msg"></textarea><br>
                     <input class="submit_msg" type="submit" value="Envoyer">

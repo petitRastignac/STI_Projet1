@@ -62,7 +62,7 @@ if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
                     for($i = 0; $i < count($resultat); $i++){
                         echo "<div class='message'><span>{$resultat[$i][3]}</span> <span class='exp'>{$resultat[$i][1]}</span> <a href='ReadMessage.php?i={$resultat[$i][0]}' class='subject'>{$resultat[$i][2]}</a>
                         <form method='post'> 
-                        <a href='NewMessage.php?dest={$resultat[$i][1]}'>Repondre </a>
+                        <a href='NewMessage.php?dest={$resultat[$i][1]}'><button type='button'>Repondre</button></a>
                         <button type='submit' name='suppr' value='{$resultat[$i][0]}' class='btn-suppr'>Supprimer</button>
                         </form>
                     </div>";

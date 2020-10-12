@@ -54,7 +54,7 @@ else{
                 <textarea rows="34" cols="81" name="msg-value" disabled><?php echo "{$content}";?></textarea>
             
                 <form action='ReceptionPage.php' method='post'> 
-                        <a href=<?php echo "NewMessage.php?dest={$exp}";?>>Repondre </a>
+                        <a href=<?php echo "NewMessage.php?dest={$exp}";?>><button type="button">Repondre</button></a>
                         <button type='submit' name='suppr' value=<?php echo "{$id}";?> class='btn-suppr'>Supprimer</button>
                 </form>
             </div>

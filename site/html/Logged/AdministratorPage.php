@@ -5,6 +5,9 @@ if(!(isset($_SESSION['id'])) || $_SESSION['role'] != 'admin'){
 }
 
 $message = "";
+$messageRM = "";
+$messageADD = "";
+$messageMOD = "";
 $MDPmessage = "";
 
 if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -84,12 +87,12 @@ if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
                 WHERE user LIKE '{$_POST['usr_name']}';");
     
                 if (!$statementE){
-                    $message = 'Echec du changement';
+                    $messageMOD = 'Echec du changement';
                 } else {
-                    $message = 'Reussite du changement';
+                    $messageMOD = 'Reussite du changement';
                 }
             } else {
-                $message = "Utilisateur non existant";
+                $messageMOD = "Utilisateur non existant";
             }
     
         }catch(PDOException $e){
@@ -124,12 +127,12 @@ if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
                 VALUES('{$_POST['usr_name']}', '{$md5}', '{$_POST['role_val']}', {$valid});");
     
                 if (!$statementE){
-                    $message = 'Echec de l ajout';
+                    $messageADD = 'Echec de l ajout';
                 } else {
-                    $message = 'Reussite de l ajout';
+                    $messageADD = 'Reussite de l ajout';
                 }
             } else {
-                $message = "Utilisateur deja existant";
+                $messageADD = "Utilisateur deja existant";
             }
     
         }catch(PDOException $e){
@@ -137,6 +140,36 @@ if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
         }
     }
     
+    if ($_POST['rmuser']) {
+        try{
+            // Create PDO object
+            $db = new PDO('sqlite:/usr/share/nginx/databases/database.sqlite');
+            // Set errormode to exceptions
+            $db->setAttribute(PDO::ATTR_ERRMODE, 
+                                    PDO::ERRMODE_EXCEPTION);
+            
+            $statement = $db->query("SELECT * FROM Member WHERE user LIKE '{$_POST['usr_name']}';");
+            $statement->execute();
+    
+            $resultat = $statement->fetch();
+    
+            if ($resultat != null){
+                
+                $statementE = $db->query("DELETE FROM Member WHERE user LIKE '{$_POST['usr_name']}';");
+    
+                if (!$statementE){
+                    $messageRM = 'Echec de la suppression';
+                } else {
+                    $messageRM = 'Reussite de la suppression';
+                }
+            } else {
+                $messageRM = "Utilisateur non existant";
+            }
+    
+        }catch(PDOException $e){
+            echo $e->getMessage();
+        }
+    }
 
 }
 ?>
@@ -173,17 +206,18 @@ if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
                         <div class="add-user">
                             <form method="POST">
                                 <label for="usr_name">Nom d'utilisateur:</label><br>
-                                <input type="text" id="usr_name" name="usr_name" placeholder="Rentrez un nom d'utilisateur"></input><br>
+                                <input type="text" id="usr_name" name="usr_name" placeholder="Rentrez un nom d'utilisateur" required></input><br>
                                 <label for="pass_val">Mot de passe:</label><br>
-                                <input type="password" id="pass_val" name="pass_val" placeholder="Rentrez un mot de passe"></input><br>
+                                <input type="password" id="pass_val" name="pass_val" placeholder="Rentrez un mot de passe" required></input><br>
                                 <label for="role_val">Rôle:</label><br>
-                                <select id="role" name="role_val">
+                                <select id="role" name="role_val" required>
                                     <option value="admin">administrateur</option>
                                     <option value="colab">colaborateur</option>
                                 </select></br>
                                 <label for="validation_val">Validation:</label>
                                 <input type="checkbox" id="validation_val" name="validation_val" value="valid" checked>
-                                <input type="submit" id="submit" name="adduser" value="Valider">                        
+                                <input type="submit" id="submit" name="adduser" value="Valider">  
+                                <p id="passChangeL"> <?php echo $messageADD; ?></p>                        
                             </form>
                         </div>
                     </div>
@@ -192,7 +226,7 @@ if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
                         <div class="change-user">
                             <form method="POST">
                                 <label for="usr_name">Nom d'utilisateur:</label><br>
-                                <input type="text" id="usr_name" name="usr_name" placeholder="Rentrez un nom d'utilisateur"></input><br>
+                                <input type="text" id="usr_name" name="usr_name" placeholder="Rentrez un nom d'utilisateur" required></input><br>
                                 <label for="pass_val">Mot de passe:</label><br>
                                 <input type="password" id="pass_val" name="pass_val" placeholder="Rentrez un mot de passe"></input><br>
                                 <label for="role_val">Rôle:</label><br>
@@ -204,7 +238,18 @@ if 	($_SERVER['REQUEST_METHOD'] === 'POST'){
                                 <label for="validation_val">Validation:</label>
                                 <input type="checkbox" id="validation_val" name="validation_val" checked>
                                 <input type="submit" id="submit" name="modifuser" value="Valider">  
-                                <p id="passChangeL"> <?php echo $message; ?></p>                    
+                                <p id="passChangeL"> <?php echo $messageMOD; ?></p>                    
+                            </form>
+                        </div>
+                    </div>
+                    <div id="del-user">
+                        <h2>Suppression d'un utilisateur :</h2>
+                        <div class="del-user">
+                            <form method="POST">
+                                <label for="usr_name">Nom d'utilisateur:</label><br>
+                                <input type="text" id="usr_name" name="usr_name" placeholder="Rentrez un nom d'utilisateur" required></input><br>
+                                <input type="submit" id="submit" name="rmuser" value="Valider">  
+                                <p id="passChangeL"> <?php echo $messageRM; ?></p>                    
                             </form>
                         </div>
                     </div>
