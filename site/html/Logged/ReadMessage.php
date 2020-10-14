@@ -46,12 +46,10 @@ else{
             </div>
 
             <div id="writing">
-                <label for="dest-value">Destinataire</label>
-                <input type="text" id="dest-value" name="test-value" value=<?php echo "{$exp}";?> disabled><br>
-                <label for="subject-value">Sujet</label>
-                <input type="text" id="subject-value" name="subject-value" value=<?php echo "{$subject}";?> disabled><br>
-                <label id="msg_value" for="msg-value">Message</label><br>
-                <textarea rows="34" cols="81" name="msg-value" disabled><?php echo "{$content}";?></textarea>
+                <label for="dest-value">Destinataire: <?php echo "{$exp}";?></label><br><br>
+                <label for="subject-value">Sujet: <?php echo "{$subject}";?></label><br><br>
+                <label id="msg_value" for="msg-value">Message<br></label><br>
+                <textarea rows="34" cols="81" name="msg-value" readonly="readonly"><?php echo "{$content}";?></textarea>
             
                 <form action='ReceptionPage.php' method='post'> 
                         <a href=<?php echo "NewMessage.php?dest={$exp}";?>><button type="button">Repondre</button></a>
