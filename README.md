@@ -32,3 +32,7 @@ Alors il faut pour mettre en place le service sur le serveur de l'entreprise :
 * Cloner le répo de git hub sur le serveur
 * Lancer l'application avec  ```$ sudo bash server.sh```
 * En cas de problème de base de données, il est impératif de donner les permissions au dossier et à la base de données dans /site/databases . Le script ```server.sh``` prend en charge cette étape sur linux.
+
+Bien caché ici, le mot de passe d'un administrateur et celui d'un collaborateur (la base de donnée est fournis et contient déjà des données):
+* admin PierrePaul80
+* popole pololo
