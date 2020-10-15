@@ -22,7 +22,7 @@ La site de messagerie permet de discuter entre collègues.
 # Les fonctionnalités d'administrateur
 
 Les administrateurs en plus des fonctionnalitées données aux collaborateurs peuvent:
-* Ajouter un utilisateur
+* Ajouter un utilisateur (le nom d'utilisateur ne peut pas contenir des ", - et ')
 * Modifier un utilisateur (sauf son nom d'utilisateur)
 * Supprimer un utilisateur
 
